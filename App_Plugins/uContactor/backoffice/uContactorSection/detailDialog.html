@@ -1,0 +1,44 @@
+﻿<div class="umb-pane" ng-controller="uContactor.DetailContact.controller" style="max-height:90%; overflow-y:scroll;">
+    <a href="#" class="comment-detail-link">{{contact.Subject}}</a><br />
+    <span class="commenter-detail-name">{{contact.Name}}</span>&nbsp;•&nbsp;<span class="comment-detail-date">
+            {{contact.CreateDate | date:"medium"}}</span>
+    <div class="comment-detail-message">
+        <div ng-bind-html="contact.Message" style="white-space:pre-line;"></div>
+    </div>
+    <div ng-if="!contact.IsTrashed && !contact.IsSpam && !contact.IsReplied">
+        <div class="comment-control-detail">
+            <a ng-init="showReply = true" ng-click="showEdit = showReply == true ? true : showEdit; showReply = !showReply;">
+                {{!showReply ? 'Close' : 'Reply'}}</a>
+        </div>
+        <div class="comment-reply" ng-class="{'open': !showReply}">
+            <form>
+                <label>Message:</label>
+                <umb-editor model="contact.reply_message"></umb-editor>
+                <div class="clearfix"></div>
+                <br />
+                <button class="btn pull-right" ng-click="save(contact)">Send</button>
+            </form>
+        </div>
+    </div>
+    <div ng-if="contact.IsReplied" class="contact-replied">
+        <strong>Replied By: {{contact.Username}}</strong><br/>
+        <span class="contact-replied-message">Message:</span><br/>
+        <div ng-bind-html="contact.ReplyMessage"></div>
+    </div>
+    <div class="comment-user-detail">
+        <div class="user-section">
+            <div class="commenter-email">Email: {{contact.Email}}</div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div>
+        <div class="umb-pane btn-toolbar umb-btn-toolbar">
+            <div class="control-group umb-control-group">
+                <a href="" class="btn btn-default" ng-click="close()">
+                    <localize key="general_close">Close</localize>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

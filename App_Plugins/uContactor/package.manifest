@@ -1,0 +1,9 @@
+{      
+    javascript: [
+
+		'~/App_Plugins/uContactor/uContactor.controller.js'
+    ],
+	css: [
+		'~/App_Plugins/uContactor/assets/style.css'
+	]
+}

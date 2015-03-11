@@ -1,0 +1,23 @@
+﻿<div class="umb-pane" ng-controller="uCommentator.ShowComment.controller">
+    <p>
+        Are you sure you want to show this comment in your website?<br />
+        {{comment.thread.title}}<br />
+        <strong>Name</strong>:<br />
+        <small>{{comment.author.name}} - {{comment.author.email}}</small><br />
+        <strong>Comment</strong>:<br />
+        <small>{{comment.raw_message}}</small>
+    </p>
+
+    <div>
+        <div class="umb-pane btn-toolbar umb-btn-toolbar">
+            <div class="control-group umb-control-group">
+                <a href="" class="btn btn-link" ng-click="cancelShow()">
+                    <localize key="general_cancel">Cancel</localize>
+                </a>
+                <a href="" class="btn btn-primary" ng-click="show(comment.id)">
+                    <localize key="general_ok">OK</localize>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

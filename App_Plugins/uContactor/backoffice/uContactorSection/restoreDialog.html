@@ -1,0 +1,23 @@
+﻿<div class="umb-pane" ng-controller="uContactor.RestoreContact.controller">
+    <p>
+        Are you sure you want to restore this contact?<br />
+        <span class="contact-subject">{{contact.Subject}}</span><br />
+        <strong>Name</strong>:<br />
+        <small>{{contact.Name}} - {{contact.Email}}</small><br />
+        <strong>Message</strong>:<br />
+        <small ng-bind-html="contact.Message | limitTo: 200"></small>{{contact.Message.length > 200 ? '...' : ''}}
+    </p>
+
+    <div>
+        <div class="umb-pane btn-toolbar umb-btn-toolbar">
+            <div class="control-group umb-control-group">
+                <a href="" class="btn btn-link" ng-click="cancelRestore()">
+                    <localize key="general_cancel">Cancel</localize>
+                </a>
+                <a href="" class="btn btn-primary" ng-click="restore(contact.Id)">
+                    <localize key="general_ok">OK</localize>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

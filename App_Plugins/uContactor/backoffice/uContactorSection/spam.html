@@ -1,0 +1,71 @@
+﻿<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<umb-panel>
+    <umb-header tabs="content.tabs">
+        <div class="umb-headline-editor-wrapper span12 ng-scope">
+            <h1 class="ng-binding">Spammed Messages</h1>
+        </div>
+    </umb-header>
+    <umb-tab-view>
+        <div class="umb-pane">
+            <div ng-controller="uContactor.SpammedContact.controller" class="contact-container">
+                <div class="contact-top-menu span12">
+                    <form ng-submit="searchPost(search, sortContact)">
+                        <div class="pull-left" style="position:relative;">
+                            <input type="text" class="form-control" ng-model="search" ng-init="search = ''" placeholder="Search..." />
+                            <span class="search-clear close clickable" ng-init="showX = search.length > 0 ? 'block' : 'none'"
+                                  ng-style="{'display':search.length > 0 ? 'block' : 'none'}"
+                                  ng-click="clearSearch(search, sortContact)">×</span>
+                            <input type="submit" id="submit" value="Submit" style="visibility:hidden;position:absolute;left:-9999px;" />
+                        </div>
+                        <div class="pull-right">
+                            <span style="line-height:30px;">Sort</span>
+                            <select ng-model="sortContact" ng-init="sortContact = 'desc'" style="width:100px;" name="sort"
+                                    ng-change="searchPost(search, sortContact)">
+                                <option value="desc">Newest</option>
+                                <option value="asc">Oldest</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div ng-repeat="item in contact.Items">
+                    <div class="contact-item span12">
+                        <div ng-click="contactDetail(item)">
+                            <a href="#" class="contact-link">{{item.Subject}}</a>
+                            <div class="contact-header">
+                                <span class="contacter-name">{{item.Name}}</span>&nbsp;•&nbsp;<span class="contact-date">
+                                    {{item.CreateDate | date:"medium"}}
+                                </span>
+                                <div class="pull-right">
+                                    <span class="contacter-email">{{item.Email}}</span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="contact-content">                                
+                                {{item.Message | limitTo: 200}}{{item.Message.length > 200 ? '...' : ''}}
+                            </div>
+                        </div>
+                        <div class="contact-control">
+                            <a href="#" class="spam disabled">
+                                <i class="fa {{item.IsReplied ? 'fa-check' : 'fa-close'}}"></i> {{item.IsReplied ? 'Replied' : 'Not Replied'}}
+                            </a> &nbsp;&nbsp;
+                            <a ng-click="item.IsSpam ? unSpam(item) : markSpam(item)" class="spam">
+                                <i class="fa {{item.IsSpam ? 'fa-undo' : 'fa-ban'}}"></i>
+                                {{item.IsSpam ? 'Un-Spam' : 'Spam'}}
+                            </a> &nbsp;&nbsp;
+                            <a ng-click="item.IsTrashed ? restoreContact(item) : deleteContact(item)" class="delete ">
+                                <i class="fa {{item.IsTrashed ? 'fa-recycle' : 'fa-trash'}}"></i>
+                                {{item.IsTrashed ? 'Restore' : 'Delete'}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="v-spacer"></div>
+                <div class="text-left">
+                    <span ng-if="contact.CurrentPage > 1" ng-click="goToPage(contact.CurrentPage - 1)" class="btn">Prev</span>
+                    <span ng-if="contact.CurrentPage < contact.TotalPages" ng-click="goToPage(contact.CurrentPage + 1)" class="btn">Next</span>
+                </div>
+                <div class="v-spacer"></div>
+            </div>
+        </div>
+    </umb-tab-view>
+</umb-panel>
