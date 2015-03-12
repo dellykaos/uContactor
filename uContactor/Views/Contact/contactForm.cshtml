@@ -1,0 +1,39 @@
+@using System.Web.Mvc.Html
+@using Umbraco.Contact.Controllers
+@using Umbraco.Contact.Models.Form
+@using Umbraco.Web
+@model ContactFormModel
+
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+@if (Convert.ToBoolean(TempData["IsSuccessfull"]))
+{
+    <h1>YAY!</h1>
+    <p>Thanks for the message, we will be in touch soon.</p>
+}
+
+@{
+    using (Html.BeginUmbracoForm<ContactController>("HandleContactForm"))
+    {   
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+    
+        <h3>Ay Ay, Leave a message</h3>
+        @Html.TextBoxFor(model => model.Name, new {placeholder = "Your Name", @class="form-control"})
+        @Html.ValidationMessageFor(model => model.Name)<br/>
+
+        @Html.TextBoxFor(model => model.Email, new {placeholder = "Email Address", @class="form-control"})
+        @Html.ValidationMessageFor(model => model.Email)<br/>
+
+        @Html.TextBoxFor(model => model.Subject, new {placeholder = "Subject", @class="form-control"})
+        @Html.ValidationMessageFor(model => model.Subject)<br/>
+
+        @Html.TextAreaFor(model => model.Message, new {placeholder = "Your Message", @class="form-control", wrap="hard", rows="5"})
+        @Html.ValidationMessageFor(model => model.Message)<br/>
+
+        <input type="submit" value="Send" class="btn btn-primary"/>
+    }
+}
