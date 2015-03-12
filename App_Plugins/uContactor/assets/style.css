@@ -11,7 +11,7 @@
 }
 
 .contact-container {
-    width: 85%;
+    width: 100%;
 }
 
 .contact-item:hover {
@@ -102,32 +102,32 @@ a.contact-link {
     margin-left: 0;
 }
 
-.contact-subject{
-    font-size:18px;
-    font-weight:bold;
-    line-height:26px;
+.contact-subject {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 26px;
 }
 
-.contact-subject:before{
-    content: "Subject: ";
-}
+    .contact-subject:before {
+        content: "Subject: ";
+    }
 
 .contact-reply {
-    display:none;
+    display: none;
 }
 
     .contact-reply.open {
-        display:block;
-        padding-bottom:5px;
+        display: block;
+        padding-bottom: 5px;
     }
 
-.contact-replied{
-    margin:10px 0 0 10px;
+.contact-replied {
+    margin: 10px 0 0 10px;
     padding-left: 10px;
     border-left: solid 2px #d3d3d3;
 }
 
-.contact-replied-message{
+.contact-replied-message {
     font-weight: bold;
     font-size: 12px;
     color: #777;
@@ -172,7 +172,7 @@ a.contact-link {
 }
 
 .child-date {
-    font-size:10px;
+    font-size: 10px;
 }
 
 .contact-reply-to {
@@ -270,4 +270,9 @@ span .checkbox {
     left: 20px;
     padding-left: 0;
     margin-top: 1px;
+}
+
+.uContactor-input {
+    width: 50%;
+    min-width: 200px;
 }

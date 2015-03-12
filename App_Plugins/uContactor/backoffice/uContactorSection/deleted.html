@@ -55,6 +55,10 @@
                             <a ng-click="item.IsTrashed ? restoreContact(item) : deleteContact(item)" class="delete ">
                                 <i class="fa {{item.IsTrashed ? 'fa-recycle' : 'fa-trash'}}"></i>
                                 {{item.IsTrashed ? 'Restore' : 'Delete'}}
+                            </a> &nbsp;&nbsp;
+                            <a ng-click="permanentDelete(item)" class="permanent-delete ">
+                                <i class="fa fa-trash"></i>
+                                Permanent Delete
                             </a>
                         </div>
                     </div>

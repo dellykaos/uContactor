@@ -1,4 +1,5 @@
-﻿(function () {        
+﻿'use strict';
+(function () {
     angular.module("umbraco")
     .controller("uContactor.ConfirmationDialog.controller",
         function ($scope, dialogService, $compile) {
@@ -23,6 +24,32 @@
                     $http({
                         method: "POST",
                         url: "/Umbraco/uContactor/uContactorApi/MoveToTrash",
+                        params: req,
+                        config: { timeout: 30000 }
+                    })
+                        .success(function (resp) {
+                            dialogService.closeAll({ dialogData: $scope.contact, resp: resp });
+                        }).error(function (resp) {
+                            dialogService.closeAll({ dialogData: $scope.contact, resp: resp });
+                        });
+                }
+            }
+
+            $scope.cancelDelete = function () {
+                dialogService.closeAll({ dialogData: $scope.contact, resp: "cancel" });
+            };
+        })
+    .controller("uContactor.PermanentDeleteContact.controller",
+        function ($scope, dialogService, $http, $route, umbRequestHelper) {
+            $scope.contact = $scope.dialogData;
+
+            $scope.delete = function (id) {
+                var req = { id: id };
+
+                if (id > 0) {
+                    $http({
+                        method: "POST",
+                        url: "/Umbraco/uContactor/uContactorApi/DeleteForever",
                         params: req,
                         config: { timeout: 30000 }
                     })
@@ -183,6 +210,7 @@
             $scope.contact = {};
             $scope.search = '';
             $scope.sortContact = 'desc';
+            $scope.messageType = 'all';
 
             $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
                     "filter="
@@ -199,6 +227,8 @@
                 });
 
             $scope.markSpam = function (data) {
+                dialogService.closeAll();
+
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/spamDialog.html',
                     show: true,
@@ -206,19 +236,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been moved to spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been moved to spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.unSpam = function (data) {
+                dialogService.closeAll();
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/unspamDialog.html',
                     show: true,
@@ -226,19 +258,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been marked as not spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to mark contact as not spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been marked as not spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to mark contact as not spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.deleteContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/deleteDialog.html',
                     show: true,
@@ -246,18 +280,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been deleted");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to delete contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been deleted");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to delete contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.restoreContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/restoreDialog.html',
                     show: true,
@@ -265,18 +302,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been restored");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to restore contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been restored");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to restore contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.contactDetail = function (data) {
+                dialogService.closeAll();
                 var detailDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/detailDialog.html',
                     closeCallback: done,
@@ -285,14 +325,16 @@
                 });
 
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp.status = "reply") {
-                            notificationsService.success("Success", "Reply contact has been send, page will refreshed");
-                            $timeout(function () {
-                                $route.reload();
-                            }, 3000);
-                        } else if (data.resp.status = "failed") {
-                            notificationsService.error("Error", "Failed to reply contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp.status = "reply") {
+                                notificationsService.success("Success", "Reply contact has been send, page will refreshed");
+                                $timeout(function() {
+                                    $route.reload();
+                                }, 3000);
+                            } else if (data.resp.status = "failed") {
+                                notificationsService.error("Error", "Failed to reply contact, please try again later");
+                            }
                         }
                     }
                 }
@@ -326,9 +368,10 @@
             $scope.searchPost = function (query, sort) {
                 sort = angular.isUndefined(sort) ? "desc" : sort;
                 query = angular.isUndefined(query) ? "" : query;
+                var filter = $scope.messageType === 'all' ? '' : $scope.messageType;
 
                 $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
-                     "filter="
+                     "filter=" + filter
                      + "&sort=" + sort
                      + "&orderBy="
                      + "&search=" + query
@@ -362,6 +405,8 @@
                 });
 
             $scope.markSpam = function (data) {
+                dialogService.closeAll();
+
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/spamDialog.html',
                     show: true,
@@ -369,19 +414,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been moved to spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been moved to spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.deleteContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/deleteDialog.html',
                     show: true,
@@ -389,18 +436,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been deleted");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to delete contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been deleted");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to delete contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.contactDetail = function (data) {
+                dialogService.closeAll();
                 var detailDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/detailDialog.html',
                     closeCallback: done,
@@ -409,14 +459,16 @@
                 });
 
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp.status = "reply") {
-                            notificationsService.success("Success", "Reply contact has been send, page will refreshed");
-                            $timeout(function () {
-                                $route.reload();
-                            }, 3000);
-                        } else if (data.resp.status = "failed") {
-                            notificationsService.error("Error", "Failed to reply contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp.status = "reply") {
+                                notificationsService.success("Success", "Reply contact has been send, page will refreshed");
+                                $timeout(function () {
+                                    $route.reload();
+                                }, 3000);
+                            } else if (data.resp.status = "failed") {
+                                notificationsService.error("Error", "Failed to reply contact, please try again later");
+                            }
                         }
                     }
                 }
@@ -486,6 +538,8 @@
                 });
 
             $scope.markSpam = function (data) {
+                dialogService.closeAll();
+
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/spamDialog.html',
                     show: true,
@@ -493,19 +547,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been moved to spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been moved to spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.deleteContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/deleteDialog.html',
                     show: true,
@@ -513,18 +569,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been deleted");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to delete contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been deleted");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to delete contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.contactDetail = function (data) {
+                dialogService.closeAll();
                 var detailDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/detailDialog.html',
                     closeCallback: done,
@@ -533,14 +592,16 @@
                 });
 
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp.status = "reply") {
-                            notificationsService.success("Success", "Reply contact has been send, page will refreshed");
-                            $timeout(function () {
-                                $route.reload();
-                            }, 3000);
-                        } else if (data.resp.status = "failed") {
-                            notificationsService.error("Error", "Failed to reply contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp.status = "reply") {
+                                notificationsService.success("Success", "Reply contact has been send, page will refreshed");
+                                $timeout(function () {
+                                    $route.reload();
+                                }, 3000);
+                            } else if (data.resp.status = "failed") {
+                                notificationsService.error("Error", "Failed to reply contact, please try again later");
+                            }
                         }
                     }
                 }
@@ -610,6 +671,7 @@
                 });
 
             $scope.unSpam = function (data) {
+                dialogService.closeAll();
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/unspamDialog.html',
                     show: true,
@@ -617,19 +679,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been marked as not spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to mark contact as not spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been marked as not spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to mark contact as not spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.deleteContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/deleteDialog.html',
                     show: true,
@@ -637,18 +701,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been deleted");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to delete contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been deleted");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to delete contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.contactDetail = function (data) {
+                dialogService.closeAll();
                 var detailDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/detailDialog.html',
                     closeCallback: done,
@@ -657,14 +724,16 @@
                 });
 
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp.status = "reply") {
-                            notificationsService.success("Success", "Reply contact has been send, page will refreshed");
-                            $timeout(function () {
-                                $route.reload();
-                            }, 3000);
-                        } else if (data.resp.status = "failed") {
-                            notificationsService.error("Error", "Failed to reply contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp.status = "reply") {
+                                notificationsService.success("Success", "Reply contact has been send, page will refreshed");
+                                $timeout(function () {
+                                    $route.reload();
+                                }, 3000);
+                            } else if (data.resp.status = "failed") {
+                                notificationsService.error("Error", "Failed to reply contact, please try again later");
+                            }
                         }
                     }
                 }
@@ -734,6 +803,8 @@
                 });
 
             $scope.markSpam = function (data) {
+                dialogService.closeAll();
+
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/spamDialog.html',
                     show: true,
@@ -741,19 +812,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been moved to spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been moved to spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to move contact to spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.unSpam = function (data) {
+                dialogService.closeAll();
                 var spamDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/unspamDialog.html',
                     show: true,
@@ -761,19 +834,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been marked as not spam");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to mark contact as not spam, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been marked as not spam");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to mark contact as not spam, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.deleteContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/deleteDialog.html',
                     show: true,
@@ -781,18 +856,44 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been deleted");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to delete contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been deleted");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to delete contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
+            $scope.permanentDelete = function (data) {
+                dialogService.closeAll();
+                var deleteDialog = dialogService.open({
+                    template: '/App_Plugins/uContactor/backoffice/uContactorSection/permanentDeleteDialog.html',
+                    show: true,
+                    dialogData: data,
+                    closeCallback: done
+                });
+                function done(data) {
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been deleted");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to delete contact, please try again later");
+                            }
+                        }
+                    }
+                }
+                
+            }
+
             $scope.restoreContact = function (data) {
+                dialogService.closeAll();
                 var deleteDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/restoreDialog.html',
                     show: true,
@@ -800,18 +901,21 @@
                     closeCallback: done
                 });
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp == "true") {
-                            notificationsService.success("Success", "Contact has been restored");
-                            $route.reload();
-                        } else {
-                            notificationsService.error("Error", "Failed to restore contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp == "true") {
+                                notificationsService.success("Success", "Contact has been restored");
+                                $route.reload();
+                            } else {
+                                notificationsService.error("Error", "Failed to restore contact, please try again later");
+                            }
                         }
                     }
                 }
             }
 
             $scope.contactDetail = function (data) {
+                dialogService.closeAll();
                 var detailDialog = dialogService.open({
                     template: '/App_Plugins/uContactor/backoffice/uContactorSection/detailDialog.html',
                     closeCallback: done,
@@ -820,14 +924,16 @@
                 });
 
                 function done(data) {
-                    if (data.resp != "cancel" && data.resp != null) {
-                        if (data.resp.status = "reply") {
-                            notificationsService.success("Success", "Reply contact has been send, page will refreshed");
-                            $timeout(function () {
-                                $route.reload();
-                            }, 3000);
-                        } else if (data.resp.status = "failed") {
-                            notificationsService.error("Error", "Failed to reply contact, please try again later");
+                    if (data != null) {
+                        if (data.resp != "cancel" && data.resp != null) {
+                            if (data.resp.status = "reply") {
+                                notificationsService.success("Success", "Reply contact has been send, page will refreshed");
+                                $timeout(function () {
+                                    $route.reload();
+                                }, 3000);
+                            } else if (data.resp.status = "failed") {
+                                notificationsService.error("Error", "Failed to reply contact, please try again later");
+                            }
                         }
                     }
                 }
@@ -878,6 +984,9 @@
         })
     .controller("uContactor.Settings.controller",
         function ($scope, dialogService, $http, $route, umbRequestHelper, notificationsService, $timeout, $filter) {
+            $scope.temp = {};
+            $scope.tabs = [{ id: 1, label: "Auto Reply Message" }, { id: 2, label: "Notification Message" }, { id: 3, label: "Others" }];
+
             $scope.settings = {};
             $scope.auto_reply_message = {
                 label: 'bodyText',
@@ -901,6 +1010,40 @@
                     }
                 }
             }
+            $scope.auto_template = {
+                label: 'Auto Reply Template',
+                description: 'Select auto reply template',
+                view: 'contentpicker',
+                config: {
+                    multiPicker: "0",
+                    entityType: "Document",
+                    startNode: {
+                        query: "",
+                        type: "content",
+                        id: -1
+                    },
+                    filter: "",
+                    minNumber: 0,
+                    maxNumber: 1
+                }
+            };
+            $scope.notification_template = {
+                label: 'Notification Template',
+                description: 'Select notification template',
+                view: 'contentpicker',
+                config: {
+                    multiPicker: "0",
+                    entityType: "Document",
+                    startNode: {
+                        query: "",
+                        type: "content",
+                        id: -1
+                    },
+                    filter: "",
+                    minNumber: 0,
+                    maxNumber: 1
+                }
+            };
 
             $http.get("/Umbraco/uContactor/uContactorApi/GetSettings")
                 .success(function(data) {
@@ -909,12 +1052,14 @@
                     $scope.auto_reply_message.value = found[0].ConfigValue;
                     found = $filter('filter')($scope.settings, { ConfigName: "NotificationMessage" }, true);
                     $scope.notification_message.value = found[0].ConfigValue;
+                    $scope.auto_template.value = $filter('filter')($scope.settings, { ConfigName: "TemplateNode" }, true)[0].ConfigValue;
+                    $scope.notification_template.value = $filter('filter')($scope.settings, { ConfigName: "NotificationTemplateNode" }, true)[0].ConfigValue;
                 })
                 .error(function (resp) {
                     notificationsService.error("Error", "Failed to retrieve contact settings, please try again later / refresh page");
                 });
 
-            $scope.save = function (data, automessage) {
+            $scope.save = function () {
                 var config = [];
 
                 angular.forEach($scope.settings, function (value, key) {
@@ -930,6 +1075,10 @@
                         temp.ConfigValue = $scope.auto_reply_message.value;
                     }else if (value.ConfigName === "NotificationMessage") {
                         temp.ConfigValue = $scope.notification_message.value;
+                    } else if (value.ConfigName === "TemplateNode") {
+                        temp.ConfigValue = $scope.auto_template.value;
+                    } else if (value.ConfigName === "NotificationTemplateNode") {
+                        temp.ConfigValue = $scope.notification_template.value;
                     }
 
                     config.push(temp);
@@ -952,5 +1101,12 @@
                     }
                 });
             }
-        })
+
+            $scope.otherSettings = function (item) {
+                if (item.ConfigText.toLowerCase().indexOf("auto") > -1 || item.ConfigText.toLowerCase().indexOf("notification") > -1) {
+                    return false;
+                }
+                return true;
+            };
+        });
 })();

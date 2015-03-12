@@ -128,6 +128,23 @@ namespace Umbraco.Contact.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        public bool DeleteForever(int id)
+        {
+            var db = ApplicationContext.DatabaseContext.Database;
+            try
+            {
+                var contact = GetContact(id);
+
+                db.Delete(contact);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
         public bool RemoveFromTrash(int id)
         {
             var db = ApplicationContext.DatabaseContext.Database;

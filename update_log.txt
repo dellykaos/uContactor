@@ -1,0 +1,10 @@
+uContactor 1.0.1 Build:
+- Using tabs in settings menu
+- Change save and send button class with btn-primary or btn-success to make it consistency with core UI
+- Localize button save
+- Change default content width from 85% to 100%
+- Change Auto Reply and Notification Template Node Id to Content Picker
+- Make all dialog clearer with change button styling and text
+- Close all dialog before open new dialog
+- Adding permanent delete message
+- Add filter by type in All contact message

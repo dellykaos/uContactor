@@ -1,6 +1,7 @@
-﻿<div class="umb-pane" ng-controller="uContactor.RestoreContact.controller">
+﻿<div class="umb-pane" ng-controller="uContactor.PermanentDeleteContact.controller">
     <p>
-        Are you sure you want to restore this contact?<br />
+        Are you sure you want to permanently delete this contact?<br />
+        <small style="color: #ff2200">Warning, you cannot restore this contact message after deleted!</small><br/>
         <span class="contact-subject">{{contact.Subject}}</span><br />
         <strong>Name</strong>:<br />
         <small>{{contact.Name}} - {{contact.Email}}</small><br />
@@ -11,11 +12,11 @@
     <div>
         <div class="umb-pane btn-toolbar umb-btn-toolbar">
             <div class="control-group umb-control-group">
-                <a href="" class="btn btn-link" ng-click="cancelRestore()">
+                <a href="" class="btn btn-link" ng-click="cancelDelete()">
                     <localize key="general_cancel">Cancel</localize>
                 </a>
-                <a href="" class="btn btn-primary" ng-click="restore(contact.Id)">
-                    Restore
+                <a href="" class="btn btn-danger" ng-click="delete(contact.Id)">
+                    <localize key="general_delete">Delete</localize>
                 </a>
             </div>
         </div>

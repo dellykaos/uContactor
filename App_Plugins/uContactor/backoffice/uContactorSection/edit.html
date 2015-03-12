@@ -10,12 +10,21 @@
             <div ng-controller="uContactor.AllContact.controller" class="contact-container">
                 <div class="contact-top-menu span12">
                     <form ng-submit="searchPost(search, sortContact)">
-                        <div class="pull-left" style="position:relative;">
-                            <input type="text" class="form-control" ng-model="search" ng-init="search = ''" placeholder="Search..."/>
+                        <div class="pull-left" style="position: relative;">
+                            <input type="text" class="form-control" ng-model="search" ng-init="search = ''" placeholder="Search..." />
                             <span class="search-clear close clickable" ng-init="showX = search.length > 0 ? 'block' : 'none'"
                                   ng-style="{'display':search.length > 0 ? 'block' : 'none'}"
                                   ng-click="clearSearch(search, sortContact)">×</span>
-                            <input type="submit" id="submit" value="Submit" style="visibility:hidden;position:absolute;left:-9999px;"/>
+                            <input type="submit" id="submit" value="Submit" style="visibility: hidden; position: absolute; left: -9999px;" />
+                        </div>
+                        <div class="pull-left" style="margin-left: 10px;">
+                            <select ng-model="messageType" ng-init="messageType='all'" ng-change="searchPost(search, sortContact)">
+                                <option value="all">All</option>
+                                <option value="replied">Replied</option>
+                                <option value="unreplied">Not Replied</option>
+                                <option value="spam">Spam</option>
+                                <option value="trash">Deleted</option>
+                            </select>
                         </div>
                         <div class="pull-right">
                             <span style="line-height:30px;">Sort</span>

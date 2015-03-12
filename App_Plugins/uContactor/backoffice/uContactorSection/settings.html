@@ -1,45 +1,91 @@
 ﻿<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<umb-panel>
-    <umb-header tabs="content.tabs">
-        <div class="umb-headline-editor-wrapper span12 ng-scope">
-            <h1 class="ng-binding">Contact Settings</h1>
-        </div>
-    </umb-header>
-    <umb-tab-view>
-        <div class="umb-pane" style="padding-bottom:50px;">  
-            <div ng-controller="uContactor.Settings.controller" class="contact-container">
-                <form>
-                    <div ng-repeat="item in settings">
-                        <label>{{item.ConfigText}}:</label>
-                        <div ng-if="item.ConfigName == 'AutoReplyMessage'">
-                            <umb-editor model="auto_reply_message"></umb-editor>
-                            <div class="clearfix"></div>
-                            <strong>Description: </strong>
-                            <ul>
-                                <li><small>Use "%name%" to print name from contact message</small></li>
-                                <li><small>Use "%email%" to print name from contact message</small></li>
-                                <li><small>Use "%subject%" to print subject from contact message</small></li>
-                                <li><small>Use "%message%" to print message from contact message</small></li>
-                            </ul><br />
-                        </div>
-                        <div ng-if="item.ConfigName == 'NotificationMessage'">
-                            <umb-editor model="notification_message"></umb-editor>
-                            <div class="clearfix"></div>
-                            <strong>Description: </strong>
-                            <ul>
-                                <li><small>Use "%name%" to print name from contact message</small></li>
-                                <li><small>Use "%email%" to print name from contact message</small></li>
-                                <li><small>Use "%subject%" to print subject from contact message</small></li>
-                                <li><small>Use "%message%" to print message from contact message</small></li>
-                            </ul><br />
-                        </div>
-                        <div ng-if="item.ConfigName != 'AutoReplyMessage' && item.ConfigName != 'NotificationMessage'">
-                            <input type="text" ng-model="item.ConfigValue" /><small ng-if="item.ConfigHelper.trim().length > 0">{{item.ConfigHelper}}</small><br /><br />
-                        </div>
-                    </div>
-                    <button class="btn pull-right" ng-click="save(settings, auto_reply_message)">Save</button>
-                </form>
+<div ng-controller="uContactor.Settings.controller">
+    <umb-panel>
+        <umb-header tabs="tabs">
+            <div class="umb-headline-editor-wrapper span12 ng-scope">
+                <h1 class="ng-binding">Contact Settings</h1>
             </div>
-        </div>
-    </umb-tab-view>
-</umb-panel>
+        </umb-header>
+        <umb-tab-view>
+            <umb-tab id="tab1" rel="Auto Reply Message">
+                <div class="umb-pane" style="padding-bottom: 50px;">
+                    <div class="contact-container">
+                        <form ng-submit="save()">
+                            <div ng-repeat="item in settings | filter:'auto'">
+                                <label>{{item.ConfigText}}:</label>
+                                <div ng-if="item.ConfigName == 'AutoReplyMessage'">
+                                    <umb-editor model="auto_reply_message"></umb-editor>
+                                    <div class="clearfix"></div>
+                                    <strong>Description: </strong>
+                                    <ul>
+                                        <li><small>Use "%name%" to print name from contact message</small></li>
+                                        <li><small>Use "%email%" to print name from contact message</small></li>
+                                        <li><small>Use "%subject%" to print subject from contact message</small></li>
+                                        <li><small>Use "%message%" to print message from contact message</small></li>
+                                    </ul><br/>
+                                </div>
+                                <div ng-if="item.ConfigName == 'TemplateNode'">
+                                    <umb-editor model="auto_template"></umb-editor>
+                                </div>
+                                <div ng-if="item.ConfigName != 'AutoReplyMessage' && item.ConfigName != 'TemplateNode'">
+                                    <input type="text" ng-model="item.ConfigValue" class="uContactor-input" /><small ng-if="item.ConfigHelper.trim().length > 0">{{item.ConfigHelper}}</small><br/><br/>
+                                </div>
+                            </div>
+                            <button type="submit" data-hotkey="ctrl+s" class="btn btn-success pull-right">
+                                <localize key=" buttons_save">Save</localize>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </umb-tab>
+            <umb-tab id="tab2" rel="Notification Message">
+                <div class="umb-pane" style="padding-bottom: 50px;">
+                    <div class="contact-container">
+                        <form ng-submit="save()">
+                            <div ng-repeat="item in settings | filter:'notification'">
+                                <label>{{item.ConfigText}}:</label>
+                                <div ng-if="item.ConfigName == 'NotificationMessage'">
+                                    <umb-editor model="notification_message"></umb-editor>
+                                    <div class="clearfix"></div>
+                                    <strong>Description: </strong>
+                                    <ul>
+                                        <li><small>Use "%name%" to print name from contact message</small></li>
+                                        <li><small>Use "%email%" to print name from contact message</small></li>
+                                        <li><small>Use "%subject%" to print subject from contact message</small></li>
+                                        <li><small>Use "%message%" to print message from contact message</small></li>
+                                    </ul><br />
+                                </div>
+                                <div ng-if="item.ConfigName == 'NotificationTemplateNode'">
+                                    <umb-editor model="notification_template"></umb-editor>
+                                </div>
+                                <div ng-if="item.ConfigName != 'NotificationMessage' && item.ConfigName != 'NotificationTemplateNode'">
+                                    <input type="text" ng-model="item.ConfigValue" class="uContactor-input"/><small ng-if="item.ConfigHelper.trim().length > 0">{{item.ConfigHelper}}</small><br /><br />
+                                </div>
+                            </div>
+                            <button type="submit" data-hotkey="ctrl+s" class="btn btn-success pull-right">
+                                <localize key=" buttons_save">Save</localize>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </umb-tab>
+            <umb-tab id="tab3" rel="Others">
+                <div class="umb-pane" style="padding-bottom: 50px;">
+                    <div class="contact-container">
+                        <form ng-submit="save()">
+                            <div ng-repeat="item in settings | filter:otherSettings">
+                                <label>{{item.ConfigText}}:</label>
+                                <div>
+                                    <input type="text" ng-model="item.ConfigValue" class="uContactor-input" /><small ng-if="item.ConfigHelper.trim().length > 0">{{item.ConfigHelper}}</small><br /><br />
+                                </div>
+                            </div>
+                            <button type="submit" data-hotkey="ctrl+s" class="btn btn-success pull-right">
+                                <localize key=" buttons_save">Save</localize>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </umb-tab>
+        </umb-tab-view>
+    </umb-panel>
+</div>

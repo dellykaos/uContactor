@@ -51,9 +51,9 @@ namespace Umbraco.Contact.Settings
                     new ContactSettings()
                     {
                         ConfigName = "TemplateNode",
-                        ConfigValue = "0",
-                        ConfigText = "Auto Reply Template Node Id",
-                        ConfigHelper = "*Fill with 0 to use auto reply template above",
+                        ConfigValue = "",
+                        ConfigText = "Auto Reply Template",
+                        ConfigHelper = "",
                         ConfigSort = 4
                     },
                     new ContactSettings()
@@ -91,9 +91,9 @@ namespace Umbraco.Contact.Settings
                     new ContactSettings()
                     {
                         ConfigName = "NotificationTemplateNode",
-                        ConfigValue = "0",
-                        ConfigText = "Notification Template Node Id",
-                        ConfigHelper = "*Fill with 0 to use notification template above",
+                        ConfigValue = "",
+                        ConfigText = "Notification Template",
+                        ConfigHelper = "",
                         ConfigSort = 8
                     },
                     new ContactSettings()

@@ -44,12 +44,18 @@ namespace Umbraco.Contact.Controllers
 
             var settings = db.Fetch<ContactSettings>("SELECT * FROM ContactSettings");
 
-            var node = int.Parse(settings.First(x => x.ConfigName == "TemplateNode").ConfigValue);
+            var templateNode = settings.First(x => x.ConfigName == "TemplateNode").ConfigValue;
+            var notificationNode = settings.First(x => x.ConfigName == "NotificationTemplateNode").ConfigValue;
+
+            var node = string.IsNullOrWhiteSpace(templateNode) ? 0 : int.Parse(templateNode);
+            var nodeNotification = string.IsNullOrWhiteSpace(notificationNode) ? 0 : int.Parse(notificationNode);
+
             var tempAutoReply = settings.First(x => x.ConfigName == "AutoReplyMessage").ConfigValue;
             var tempAutoReplySubject = settings.First(x => x.ConfigName == "AutoReplySubject").ConfigValue;
-            var nodeNotification = int.Parse(settings.First(x => x.ConfigName == "NotificationTemplateNode").ConfigValue);
+
             var tempNotificationMessage = settings.Find(x => x.ConfigName == "NotificationMessage").ConfigValue;
             var tempNotificationSubject = settings.First(x => x.ConfigName == "NotificationSubject").ConfigValue;
+
             var sender = settings.Find(x => x.ConfigName == "SenderEmail").ConfigValue;
             var senderDisplay = settings.Find(x => x.ConfigName == "DisplayNameSender").ConfigValue;
 
