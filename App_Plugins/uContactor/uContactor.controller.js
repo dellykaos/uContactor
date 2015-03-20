@@ -206,7 +206,7 @@
             }
         })
     .controller("uContactor.AllContact.controller",
-        function ($scope, $http, $route, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout) {
+        function ($scope, $http, $route, $routeParams, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout, navigationService) {
             $scope.contact = {};
             $scope.search = '';
             $scope.sortContact = 'desc';
@@ -383,9 +383,11 @@
                     notificationsService.error("Error", "Failed to retrieve contact, please try again later / refresh page");
                 });
             }
+
+            navigationService.syncTree({ tree: 'uContactorSection', path: ["-1", "dashboard"], forceReload: false });
         })
     .controller("uContactor.RepliedContact.controller",
-        function ($scope, $http, $route, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout) {
+        function ($scope, $http, $route, $routeParams, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout, navigationService) {
             $scope.contact = {};
             $scope.search = '';
             $scope.sortContact = 'desc';
@@ -516,9 +518,11 @@
                     notificationsService.error("Error", "Failed to retrieve contact, please try again later / refresh page");
                 });
             }
+            
+            navigationService.syncTree({ tree: 'uContactorSection', path: ["-1", "replied"], forceReload: false });
         })
     .controller("uContactor.UnRepliedContact.controller",
-        function ($scope, $http, $route, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout) {
+        function ($scope, $http, $route, $routeParams, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout, navigationService) {
             $scope.contact = {};
             $scope.search = '';
             $scope.sortContact = 'desc';
@@ -649,9 +653,11 @@
                     notificationsService.error("Error", "Failed to retrieve contact, please try again later / refresh page");
                 });
             }
+            
+            navigationService.syncTree({ tree: 'uContactorSection', path: ["-1", "unreplied"], forceReload: false });
         })
     .controller("uContactor.SpammedContact.controller",
-        function ($scope, $http, $route, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout) {
+        function ($scope, $http, $route, $routeParams, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout, navigationService) {
             $scope.contact = {};
             $scope.search = '';
             $scope.sortContact = 'desc';
@@ -781,9 +787,11 @@
                     notificationsService.error("Error", "Failed to retrieve contact, please try again later / refresh page");
                 });
             }
+
+            navigationService.syncTree({ tree: 'uContactorSection', path: ["-1", "spam"], forceReload: false });
         })
     .controller("uContactor.DeletedContact.controller",
-        function ($scope, $http, $route, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout) {
+        function ($scope, $http, $route, $routeParams, notificationsService, dialogService, $rootScope, $compile, $log, $q, $templateCache, umbRequestHelper, $timeout, navigationService) {
             $scope.contact = {};
             $scope.search = '';
             $scope.sortContact = 'desc';
@@ -981,9 +989,11 @@
                     notificationsService.error("Error", "Failed to retrieve contact, please try again later / refresh page");
                 });
             }
+
+            navigationService.syncTree({ tree: 'uContactorSection', path: ["-1", "deleted"], forceReload: false });
         })
     .controller("uContactor.Settings.controller",
-        function ($scope, dialogService, $http, $route, umbRequestHelper, notificationsService, $timeout, $filter) {
+        function ($scope, dialogService, $routeParams, $http, $route, umbRequestHelper, notificationsService, $timeout, $filter, navigationService) {
             $scope.temp = {};
             $scope.tabs = [{ id: 1, label: "Auto Reply Message" }, { id: 2, label: "Notification Message" }, { id: 3, label: "Others" }];
 
@@ -1108,5 +1118,7 @@
                 }
                 return true;
             };
+
+            navigationService.syncTree({ tree: 'uContactorSection', path: ["-1", "settings"], forceReload: false });
         });
 })();
