@@ -13,6 +13,7 @@ using Umbraco.Web.WebApi;
 
 namespace Umbraco.Contact.Controllers
 {
+    [Web.WebApi.UmbracoAuthorize]
     [PluginController("uContactor")]
     public class uContactorApiController : UmbracoApiController
     {
