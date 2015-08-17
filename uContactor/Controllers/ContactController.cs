@@ -20,6 +20,11 @@ namespace Umbraco.Contact.Controllers
             return PartialView("contactForm", new ContactFormModel());
         }
 
+        public ActionResult RenderCustomContactForm()
+        {
+            return PartialView("customContactForm", new ContactFormModel());
+        }
+
         [HttpPost]
         public ActionResult HandleContactForm(ContactFormModel contact)
         {
