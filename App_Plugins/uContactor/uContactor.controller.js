@@ -23,7 +23,7 @@
                 if (id > 0) {
                     $http({
                         method: "POST",
-                        url: "/Umbraco/uContactor/uContactorApi/MoveToTrash",
+                        url: "/umbraco/backoffice/api/uContactorApi/MoveToTrash",
                         params: req,
                         config: { timeout: 30000 }
                     })
@@ -49,7 +49,7 @@
                 if (id > 0) {
                     $http({
                         method: "POST",
-                        url: "/Umbraco/uContactor/uContactorApi/DeleteForever",
+                        url: "/umbraco/backoffice/api/uContactorApi/DeleteForever",
                         params: req,
                         config: { timeout: 30000 }
                     })
@@ -75,7 +75,7 @@
                 if (id > 0) {
                     $http({
                         method: "POST",
-                        url: "/Umbraco/uContactor/uContactorApi/RemoveFromTrash",
+                        url: "/umbraco/backoffice/api/uContactorApi/RemoveFromTrash",
                         params: req,
                         config: { timeout: 30000 }
                     })
@@ -101,7 +101,7 @@
                 if (id > 0) {
                     $http({
                         method: "POST",
-                        url: "/Umbraco/uContactor/uContactorApi/MoveSpam",
+                        url: "/umbraco/backoffice/api/uContactorApi/MoveSpam",
                         params: req,
                         config: { timeout: 30000 }
                     })
@@ -127,7 +127,7 @@
                 if (id > 0) {
                     $http({
                         method: "POST",
-                        url: "/Umbraco/uContactor/uContactorApi/RemoveFromSpam",
+                        url: "/umbraco/backoffice/api/uContactorApi/RemoveFromSpam",
                         params: req,
                         config: { timeout: 30000 }
                     })
@@ -185,7 +185,7 @@
                         if (message.trim().length > 0) {
                             $http({
                                 method: "POST",
-                                url: "/Umbraco/uContactor/uContactorApi/ReplyContact",
+                                url: "/umbraco/backoffice/api/uContactorApi/ReplyContact",
                                 params: req,
                                 config: { timeout: 30000 }
                             })
@@ -212,7 +212,7 @@
             $scope.sortContact = 'desc';
             $scope.messageType = 'all';
 
-            $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+            $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                     "filter="
                     + "&sort="
                     + "&orderBy="
@@ -345,7 +345,7 @@
                 $scope.search = angular.isUndefined($scope.search) ? "" : $scope.search;
                 $scope.contact.CurrentPage = page;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter="
                      + "&sort=" + $scope.sortContact
                      + "&orderBy="
@@ -370,7 +370,7 @@
                 query = angular.isUndefined(query) ? "" : query;
                 var filter = $scope.messageType === 'all' ? '' : $scope.messageType;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=" + filter
                      + "&sort=" + sort
                      + "&orderBy="
@@ -392,7 +392,7 @@
             $scope.search = '';
             $scope.sortContact = 'desc';
 
-            $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+            $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                     "filter=replied"
                     + "&sort="
                     + "&orderBy="
@@ -481,7 +481,7 @@
                 $scope.search = angular.isUndefined($scope.search) ? "" : $scope.search;
                 $scope.contact.CurrentPage = page;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=replied"
                      + "&sort=" + $scope.sortContact
                      + "&orderBy="
@@ -505,7 +505,7 @@
                 sort = angular.isUndefined(sort) ? "desc" : sort;
                 query = angular.isUndefined(query) ? "" : query;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=replied"
                      + "&sort=" + sort
                      + "&orderBy="
@@ -527,7 +527,7 @@
             $scope.search = '';
             $scope.sortContact = 'desc';
 
-            $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+            $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                     "filter=unreplied"
                     + "&sort="
                     + "&orderBy="
@@ -616,7 +616,7 @@
                 $scope.search = angular.isUndefined($scope.search) ? "" : $scope.search;
                 $scope.contact.CurrentPage = page;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=unreplied"
                      + "&sort=" + $scope.sortContact
                      + "&orderBy="
@@ -640,7 +640,7 @@
                 sort = angular.isUndefined(sort) ? "desc" : sort;
                 query = angular.isUndefined(query) ? "" : query;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=unreplied"
                      + "&sort=" + sort
                      + "&orderBy="
@@ -662,7 +662,7 @@
             $scope.search = '';
             $scope.sortContact = 'desc';
 
-            $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+            $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                     "filter=spam"
                     + "&sort="
                     + "&orderBy="
@@ -750,7 +750,7 @@
                 $scope.search = angular.isUndefined($scope.search) ? "" : $scope.search;
                 $scope.contact.CurrentPage = page;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=spam"
                      + "&sort=" + $scope.sortContact
                      + "&orderBy="
@@ -774,7 +774,7 @@
                 sort = angular.isUndefined(sort) ? "desc" : sort;
                 query = angular.isUndefined(query) ? "" : query;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=spam"
                      + "&sort=" + sort
                      + "&orderBy="
@@ -796,7 +796,7 @@
             $scope.search = '';
             $scope.sortContact = 'desc';
 
-            $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+            $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                     "filter=trash"
                     + "&sort="
                     + "&orderBy="
@@ -952,7 +952,7 @@
                 $scope.search = angular.isUndefined($scope.search) ? "" : $scope.search;
                 $scope.contact.CurrentPage = page;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=trash"
                      + "&sort=" + $scope.sortContact
                      + "&orderBy="
@@ -976,7 +976,7 @@
                 sort = angular.isUndefined(sort) ? "desc" : sort;
                 query = angular.isUndefined(query) ? "" : query;
 
-                $http.get("/Umbraco/uContactor/uContactorApi/GetAllContacts?" +
+                $http.get("/umbraco/backoffice/api/uContactorApi/GetAllContacts?" +
                      "filter=trash"
                      + "&sort=" + sort
                      + "&orderBy="
@@ -995,7 +995,7 @@
     .controller("uContactor.Settings.controller",
         function ($scope, dialogService, $routeParams, $http, $route, umbRequestHelper, notificationsService, $timeout, $filter, navigationService) {
             $scope.temp = {};
-            $scope.tabs = [{ id: 1, label: "Auto Reply Message" }, { id: 2, label: "Notification Message" }, { id: 3, label: "Others" }];
+            $scope.tabs = [{ id: 1, label: "Auto Reply Message" }, { id: 2, label: "Notification Message" }, { id: 3, label: "Others" }, { id: 4, label: "Optional Fields" } ];
 
             $scope.settings = {};
             $scope.auto_reply_message = {
@@ -1020,6 +1020,7 @@
                     }
                 }
             }
+
             $scope.auto_template = {
                 label: 'Auto Reply Template',
                 description: 'Select auto reply template',
@@ -1037,6 +1038,7 @@
                     maxNumber: 1
                 }
             };
+
             $scope.notification_template = {
                 label: 'Notification Template',
                 description: 'Select notification template',
@@ -1055,7 +1057,12 @@
                 }
             };
 
-            $http.get("/Umbraco/uContactor/uContactorApi/GetSettings")
+            $scope.subject_options = {
+                label: 'Subject Options',
+                view: 'tags'
+            }
+
+            $http.get("/umbraco/backoffice/api/uContactorApi/GetSettings")
                 .success(function(data) {
                     $scope.settings = data;
                     var found = $filter('filter')($scope.settings, { ConfigName: "AutoReplyMessage" }, true);
@@ -1064,6 +1071,9 @@
                     $scope.notification_message.value = found[0].ConfigValue;
                     $scope.auto_template.value = $filter('filter')($scope.settings, { ConfigName: "TemplateNode" }, true)[0].ConfigValue;
                     $scope.notification_template.value = $filter('filter')($scope.settings, { ConfigName: "NotificationTemplateNode" }, true)[0].ConfigValue;
+
+                    $scope.subject_options = $filter('filter')($scope.settings, { ConfigName: "subjectOptions" }, true)[0].ConfigValue;
+
                 })
                 .error(function (resp) {
                     notificationsService.error("Error", "Failed to retrieve contact settings, please try again later / refresh page");
@@ -1089,6 +1099,8 @@
                         temp.ConfigValue = $scope.auto_template.value;
                     } else if (value.ConfigName === "NotificationTemplateNode") {
                         temp.ConfigValue = $scope.notification_template.value;
+                    } else if (value.ConfigName === "subjectOptions") {
+                        temp.ConfigValue = $scope.subject_options.value;
                     }
 
                     config.push(temp);
@@ -1100,7 +1112,7 @@
 
                 $http({
                     method: "POST",
-                    url: "/Umbraco/uContactor/uContactorApi/UpdateSettings",
+                    url: "/umbraco/backoffice/api/uContactorApi/UpdateSettings",
                     data: config,
                     config:{timeout:30000}
                 }).success(function(resp) {

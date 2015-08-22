@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net.Mail;
 using System.Web.Mvc;
 using Umbraco.Contact.Models.Form;
 using Umbraco.Contact.Models.Poco;
-using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
-using Umbraco.Contact.Models;
 using Umbraco.Web;
 
 namespace Umbraco.Contact.Controllers
@@ -39,6 +35,10 @@ namespace Umbraco.Contact.Controllers
             doc.Email = contact.Email;
             doc.Subject = contact.Subject;
             doc.Message = contact.Message;
+            doc.PhoneNumber = contact.PhoneNumber;
+            doc.CompanyName = contact.CompanyName;
+            doc.Location = contact.Location;
+            doc.WebsiteUrl = contact.WebsiteUrl;
             doc.CreateDate = DateTime.Now;
             doc.IsReplied = false;
             doc.IsSpam = false;
@@ -110,6 +110,12 @@ namespace Umbraco.Contact.Controllers
             foreach (var item in notificationEmail)
             {
                 notifMail.To.Add(item);
+            }
+
+            //Send a copy to sender if requested:
+            if (contact.CopyRequested)
+            {
+                notifMail.To.Add(contact.Email);
             }
 
             notifMail.Subject = notificationSubject;

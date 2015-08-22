@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Web;
-using System.Web.Mvc;
 using Umbraco.Contact.Models;
 using Umbraco.Contact.Models.Poco;
 using Umbraco.Core.Persistence;
@@ -13,9 +10,8 @@ using Umbraco.Web.WebApi;
 
 namespace Umbraco.Contact.Controllers
 {
-    //[Web.WebApi.UmbracoAuthorize]
-    [PluginController("uContactor")]
-    public class uContactorApiController : UmbracoApiController
+    //routes: /umbraco/backoffice/api/uContactorApi/{method}
+    public class uContactorApiController : UmbracoAuthorizedApiController
     {
         /************************************* CONTACT API ***********************************/
         [System.Web.Http.HttpGet]
