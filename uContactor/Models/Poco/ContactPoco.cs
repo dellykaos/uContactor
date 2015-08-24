@@ -53,5 +53,25 @@ namespace Umbraco.Contact.Models.Poco
         [NullSetting(NullSetting = NullSettings.Null)]
         [SpecialDbType(SpecialDbTypes.NTEXT)]
         public string ReplyMessage { get; set; }
+
+
+
+        //Optional fields as required by Starter-IT
+        [Column("PhoneNumber")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string PhoneNumber { get; set; }
+
+        [Column("WebsiteUrl")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string WebsiteUrl { get; set; }
+
+        [Column("CompanyName")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string CompanyName { get; set; }
+
+        [Column("Location")]
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string Location { get; set; }
+
     }
 }

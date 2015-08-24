@@ -18,7 +18,6 @@
     background-color: rgba(60,255,0,0.3);
     border: 2px thick rgba(60,255,0,1);
     cursor: pointer;
-    border-radius: 5px;
 }
 
 .contact-avatar img {
@@ -275,4 +274,9 @@ span .checkbox {
 .uContactor-input {
     width: 50%;
     min-width: 200px;
+}
+
+.modal.fade.in {
+  border: none!important;
+  border-radius: 0 !important;
 }

@@ -5,6 +5,12 @@
     <div class="comment-detail-message">
         <div ng-bind-html="contact.Message" style="white-space:pre-line;"></div>
     </div>
+
+    <p><span>Location:</span> <span>{{contact.Location}}</span></p>
+    <p><span>Phone Number:</span> <span>{{contact.PhoneNumber}}</span></p>
+    <p><span>Website URL:</span> <span>{{contact.WebsiteUrl}}</span></p>
+    <p><span>Company Name:</span> <span>{{contact.CompanyName}}</span></p>
+
     <div ng-if="!contact.IsTrashed && !contact.IsSpam && !contact.IsReplied">
         <div class="comment-control-detail">
             <a ng-init="showReply = true" ng-click="showEdit = showReply == true ? true : showEdit; showReply = !showReply;">

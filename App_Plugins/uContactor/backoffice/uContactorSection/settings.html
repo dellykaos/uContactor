@@ -80,6 +80,24 @@
                     </div>
                 </div>
             </umb-tab>
+            <umb-tab id="tab4" rel="Fields">
+                <div class="umb-pane" style="padding-bottom: 50px;">
+                    <div class="contact-container">
+                        <div ng-repeat="item in settings | filter:'optionalField'">
+                            <label>{{item.ConfigText}}:</label>
+                            <div>
+                                <input type="text" ng-model="item.ConfigValue" class="uContactor-input" /><small ng-if="item.ConfigHelper.trim().length > 0">{{item.ConfigHelper}}</small><br /><br />
+                            </div>
+                        </div>
+                        <label>Optional Subjects</label>
+                        <umb-editor model="subject_options"></umb-editor>
+
+                        <button type="submit" data-hotkey="ctrl+s" class="btn btn-success pull-right">
+                            <localize key=" buttons_save">Save</localize>
+                        </button>
+                    </div>
+                </div>
+            </umb-tab>
         </umb-tab-view>
     </umb-panel>
 </form>

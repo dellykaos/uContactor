@@ -6,7 +6,7 @@
         </div>
     </umb-header>
     <umb-tab-view>
-        <div class="umb-pane">  
+        <div class="umb-pane">
             <div ng-controller="uContactor.AllContact.controller" class="contact-container">
                 <div class="contact-top-menu span12">
                     <form ng-submit="searchPost(search, sortContact)">
@@ -39,7 +39,7 @@
                 <div ng-repeat="item in contact.Items">
                     <div class="contact-item span12">
                         <div ng-click="contactDetail(item)">
-                            <a href="#" class="contact-link">{{item.Subject}}</a>
+                            <p><span>Subject:</span> <span>{{item.Subject}}</span></p>
                             <div class="contact-header">
                                 <span class="contacter-name">{{item.Name}}</span>&nbsp;•&nbsp;<span class="contact-date">
                                     {{item.CreateDate | date:"medium"}}
@@ -52,17 +52,23 @@
                             <div class="contact-content">
                                 {{item.Message | limitTo: 200}}{{item.Message.length > 200 ? '...' : ''}}
                             </div>
+                            <p><span>Location:</span> <span>{{item.Location}}</span></p>
+                            <p><span>Phone Number:</span> <span>{{item.PhoneNumber}}</span></p>
+                            <p><span>Website URL:</span> <span>{{item.WebsiteUrl}}</span></p>
+                            <p><span>Company Name:</span> <span>{{item.CompanyName}}</span></p>
                         </div>
                         <div class="contact-control">
                             <a href="#" class="spam disabled">
                                 <i class="fa {{item.IsReplied ? 'fa-check' : 'fa-close'}}"></i> {{item.IsReplied ? 'Replied' : 'Not Replied'}}
                             </a> &nbsp;&nbsp;
                             <a ng-click="item.IsSpam ? unSpam(item) : markSpam(item)" class="spam">
-                                <i class="fa {{item.IsSpam ? 'fa-undo' : 'fa-ban'}}"></i> 
-                                {{item.IsSpam ? 'Un-Spam' : 'Spam'}}</a> &nbsp;&nbsp;
+                                <i class="fa {{item.IsSpam ? 'fa-undo' : 'fa-ban'}}"></i>
+                                {{item.IsSpam ? 'Un-Spam' : 'Spam'}}
+                            </a> &nbsp;&nbsp;
                             <a ng-click="item.IsTrashed ? restoreContact(item) : deleteContact(item)" class="delete ">
-                                <i class="fa {{item.IsTrashed ? 'fa-recycle' : 'fa-trash'}}"></i> 
-                                {{item.IsTrashed ? 'Restore' : 'Delete'}}</a>
+                                <i class="fa {{item.IsTrashed ? 'fa-recycle' : 'fa-trash'}}"></i>
+                                {{item.IsTrashed ? 'Restore' : 'Delete'}}
+                            </a>
                         </div>
                     </div>
                 </div>

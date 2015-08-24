@@ -22,6 +22,37 @@ namespace Umbraco.Contact.Settings
         {
             var db = applicationContext.DatabaseContext.Database;
 
+            //Database versioning and upgrade
+            //Determine which database version we are on
+            //Execute the appropriate method to upgrade
+
+            if (!db.TableExist("ContactMessage") && !db.TableExist("ContactSettings"))
+            {
+                //There is no database. Do the initial creation
+                CreateDataBase(db);
+            }
+
+            if (db.TableExist("ContactMessage") && db.TableExist("ContactSettings") && !db.TableExist("uContactorVersion"))
+            {
+                //Database is version 0. Upgrade to version 1.
+                Upgrade00to01(db);
+            }
+
+            installer = new LanguageInstaller();
+            installer.CheckAndInstallLanguageActions();
+
+            var us = applicationContext.Services.UserService;
+            var user = us.GetByProviderKey(0);
+            if (!user.AllowedSections.Any(x => x == "uContactor"))
+            {
+                user.AddAllowedSection("uContactor");
+                us.Save(user);
+            }
+        }
+
+        private static void CreateDataBase(UmbracoDatabase db)
+        {
+
             if (!db.TableExist("ContactMessage"))
             {
                 db.CreateTable<ContactPoco>(false);
@@ -116,17 +147,27 @@ namespace Umbraco.Contact.Settings
 
                 db.BulkInsertRecords(settingsTwo);
             }
+        }
 
-            installer = new LanguageInstaller();
-            installer.CheckAndInstallLanguageActions();
+        private static void Upgrade00to01(UmbracoDatabase db)
+        {
+            //TODO: Add new columns to the ContactMessage table
+            //TODO: Add a new table called ContactorDbVersion
+            //Create a record in ContactorDbVersion and make it version 1
 
-            var us = applicationContext.Services.UserService;
-            var user = us.GetByProviderKey(0);
-            if (!user.AllowedSections.Any(x => x == "uContactor"))
-            {
-                user.AddAllowedSection("uContactor");
-                us.Save(user);
-            }
+            db.Execute(
+
+                "ALTER TABLE ContactMessage ADD " +
+                "PhoneNumber NVARCHAR(255) NULL, " +
+                "WebsiteUrl NVARCHAR(255) NULL, " +
+                "CompanyName NVARCHAR(255) NULL, " +
+                "Location NVARCHAR(255) NULL");
+
+            db.Execute(
+                "CREATE TABLE uContactorVersion (DbVersion INT)");
+
+            db.Execute(
+                "INSERT INTO uContactorVersion values(1)");
         }
     }
 }

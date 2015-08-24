@@ -32,7 +32,7 @@ namespace Umbraco.Contact.Settings
                 var repliedContacts = this.CreateTreeNode("replied", id, queryStrings, "Replied Contact Message", "icon-check", false);
                 var unRepliedContacts = this.CreateTreeNode("unreplied", id, queryStrings, "Un-Replied Contact Message", "icon-time", false);
                 var spamContacts = this.CreateTreeNode("spam", id, queryStrings, "Spam", "icon-squiggly-line", false);
-                var trashedContacts = this.CreateTreeNode("trashed", id, queryStrings, "Deleted", "icon-trash", false);
+                var trashedContacts = this.CreateTreeNode("deleted", id, queryStrings, "Deleted", "icon-trash", false);
                 var settingsContacts = this.CreateTreeNode("settings", id, queryStrings, "Settings", "icon-wrench", false);
 
                 repliedContacts.RoutePath = "/uContactor/uContactorSection/replied/0";

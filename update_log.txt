@@ -8,3 +8,10 @@ uContactor 1.0.1 Build:
 - Close all dialog before open new dialog
 - Adding permanent delete message
 - Add filter by type in All contact message
+
+uContactor 1.0.2 Build:
+- Add highlight to current active tree
+- Remove round corners on hover contact
+
+uContactor 1.0.3 Build:
+- Adding authentication to Api for retrieveng contact message

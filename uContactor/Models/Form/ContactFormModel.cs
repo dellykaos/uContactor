@@ -20,5 +20,13 @@ namespace Umbraco.Contact.Models.Form
 
         [Required]
         public string Message { get; set; }
+
+
+        //Optional fields as required by Starter-IT
+        public string PhoneNumber { get; set; }
+        public string WebsiteUrl { get; set; }
+        public string CompanyName { get; set; }
+        public string Location { get; set; }
+        public bool CopyRequested { get; set; }
     }
 }
