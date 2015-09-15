@@ -15,3 +15,6 @@ uContactor 1.0.2 Build:
 
 uContactor 1.0.3 Build:
 - Adding authentication to Api for retrieveng contact message
+
+uContactor 1.0.4 Build:
+- Adding form localization
