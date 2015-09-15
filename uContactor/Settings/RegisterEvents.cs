@@ -146,6 +146,12 @@ namespace Umbraco.Contact.Settings
                 };
 
                 db.BulkInsertRecords(settingsTwo);
+
+                db.Execute(
+                    "CREATE TABLE uContactorVersion (DbVersion INT)");
+
+                db.Execute(
+                    "INSERT INTO uContactorVersion values(1)");
             }
         }
 
@@ -156,7 +162,6 @@ namespace Umbraco.Contact.Settings
             //Create a record in ContactorDbVersion and make it version 1
 
             db.Execute(
-
                 "ALTER TABLE ContactMessage ADD " +
                 "PhoneNumber NVARCHAR(255) NULL, " +
                 "WebsiteUrl NVARCHAR(255) NULL, " +

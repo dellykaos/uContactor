@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,11 +47,20 @@
     <Reference Include="cms">
       <HintPath>..\packages\UmbracoCms.Core.7.1.6\lib\cms.dll</HintPath>
     </Reference>
+    <Reference Include="DataAnnotationsExtensions">
+      <HintPath>..\..\uContactor\uContactor\External\DataAnnotationsExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAnnotationsExtensions.ClientValidation">
+      <HintPath>..\..\uContactor\uContactor\External\DataAnnotationsExtensions.ClientValidation.dll</HintPath>
+    </Reference>
     <Reference Include="interfaces, Version=1.0.5350.25713, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Kerjaan\Sangkuriang\CMS\Custom Umbraco\MyUmbraco\MyUmbraco\bin\interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcUmbracoDataAnnotations">
+      <HintPath>..\..\uContactor\uContactor\External\MvcUmbracoDataAnnotations.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -131,6 +142,10 @@
     <Compile Include="Settings\LanguageInstaller.cs" />
     <Compile Include="Settings\RegisterEvents.cs" />
     <Compile Include="Settings\uContactorController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Contact\contactForm.cshtml" />
+    <Content Include="Views\Partials\customContactForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
